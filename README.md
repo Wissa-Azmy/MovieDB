@@ -1,5 +1,5 @@
 # MovieDB
-#### The app lists all the movies that currently now playing from the movieDB API with infinite scrolling and search functionality.
+#### iOS App that lists all the movies currently now playing from the movieDB API with infinite scrolling and search functionality.
 
 ![Alt text](art/promo.png?raw=true "MovieDB")
 
