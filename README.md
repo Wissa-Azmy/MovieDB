@@ -1,4 +1,4 @@
-#MovieDB
+# MovieDB
 #### The app lists all the movies that currently now playing from the movieDB API with infinite scrolling and search functionality.
 
 ![Alt text](./promo.png?raw=true "MovieDB")
