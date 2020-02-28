@@ -58,21 +58,21 @@ class MoviesDataService: NSObject {
         }
         
         isFetchInProgress = true
-        moviesDBApi.request(endpoint, page: requestPage, query: query) {  (result) in
+        moviesDBApi.request(endpoint, page: requestPage, query: query) {  [weak self] (result) in
             queue.async {
                 switch result {
                 case .failure(let error):
-                    self.delegate?.onFetchError(with: error.description)
+                    self?.delegate?.onFetchError(with: error.description)
                 case .success(let moviesResponse):
                     switch endpoint {
                     case .nowPlaying:
-                        self.updateNowPlayingMoviesData(with: moviesResponse)
+                        self?.updateNowPlayingMoviesData(with: moviesResponse)
                     case .search:
-                        self.updateFilteredMoviesData(with: moviesResponse)
+                        self?.updateFilteredMoviesData(with: moviesResponse)
                     }
-                    self.updateTableView(with: moviesResponse)
+                    self?.updateTableView(with: moviesResponse)
                 }
-                self.isFetchInProgress = false
+                self?.isFetchInProgress = false
             }
         }
     }
