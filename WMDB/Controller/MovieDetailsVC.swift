@@ -15,18 +15,18 @@ struct ColorPalette {
 class MovieDetailsVC: UIViewController {
     var movie: Movie?
     
-    let scrollView: UIScrollView = {
+    private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         return scrollView
     }()
-    let contentView: UIView = {
+    private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let posterImgView: UIImageView = {
+    private let posterImgView: UIImageView = {
         let imgView = UIImageView()
         imgView.image = Images.dummy
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,13 +35,13 @@ class MovieDetailsVC: UIViewController {
         imgView.addCornerRadius()
         return imgView
     }()
-    let titleView: UIView = {
+    private let titleView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = ColorPalette.titleStrip
         return view
     }()
-    let titleLbl: UILabel = {
+    private let titleLbl: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
@@ -50,7 +50,7 @@ class MovieDetailsVC: UIViewController {
         label.font = Fonts.title
         return label
     }()
-    let ratingLbl: UILabel = {
+    private let ratingLbl: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
@@ -58,7 +58,7 @@ class MovieDetailsVC: UIViewController {
         label.font = Fonts.subTitle
         return label
     }()
-    let overviewLbl: UILabel = {
+    private let overviewLbl: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -86,7 +86,7 @@ class MovieDetailsVC: UIViewController {
         configDetails(of: movie!)
     }
     
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         navigationItem.title = "Movie"
         let navBar = navigationController?.navigationBar
         navBar?.barTintColor = .white
@@ -98,7 +98,7 @@ class MovieDetailsVC: UIViewController {
         navBar?.isTranslucent = false
     }
     
-    func addViewsConstraints(){
+    private func addViewsConstraints(){
         scrollView.centerXAnchor(to: view)
         scrollView.setWidthAnchor(to: view)
         scrollView.topAnchor(to: view)

@@ -25,7 +25,7 @@ class MovieCell: UITableViewCell {
         return label
     }()
     
-    let movieImageView: UIImageView = {
+    private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Images.dummy
         imageView.contentMode = .scaleAspectFill
@@ -33,7 +33,7 @@ class MovieCell: UITableViewCell {
         return imageView
     }()
     
-    let movieImageOverlay: UIImageView = {
+    private let movieImageOverlay: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,7 @@ class MovieCell: UITableViewCell {
         return imageView
     }()
     
-    let mainView: UIView = {
+    private let mainView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 8
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +49,7 @@ class MovieCell: UITableViewCell {
         return view
     }()
     
-    let activityIndicatorView: UIActivityIndicatorView = {
+    private let activityIndicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.hidesWhenStopped = true
         indicatorView.style = .large
@@ -82,7 +82,7 @@ class MovieCell: UITableViewCell {
         movieImageView.image = nil
     }
     
-    func addViewsConstraints() {
+    private func addViewsConstraints() {
         mainView.anchors(to: contentView)
         movieImageView.anchors(to: mainView)
         movieImageOverlay.anchors(to: mainView)

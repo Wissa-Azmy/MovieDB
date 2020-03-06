@@ -9,11 +9,11 @@
 import UIKit
 
 class NowPlayingMoviesVC: UITableViewController {
-    let moviesDataService = MoviesDataService()
-    let searchController = UISearchController(searchResultsController: nil)
-    var queryString = ""
+    private let moviesDataService = MoviesDataService()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var queryString = ""
     var isSearching = false
-    let activityIndicatorView: UIActivityIndicatorView = {
+    private let activityIndicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.hidesWhenStopped = true
         indicatorView.style = .large
@@ -38,7 +38,7 @@ class NowPlayingMoviesVC: UITableViewController {
         setupNavigationBar()
     }
     
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         title = "Now Playing"
 
         let navBar = navigationController?.navigationBar
@@ -49,7 +49,7 @@ class NowPlayingMoviesVC: UITableViewController {
     }
     
 
-    func setupSearchController() {
+    private func setupSearchController() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -58,7 +58,7 @@ class NowPlayingMoviesVC: UITableViewController {
         self.definesPresentationContext = true
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.backgroundColor = .white
         tableView.register(MovieCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = moviesDataService
@@ -104,7 +104,7 @@ extension NowPlayingMoviesVC: MoviesDataServiceDelegate {
         tableView.reloadRows(at: indexPathsToReload, with: .automatic)
     }
     
-    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+    private func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
         let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows ?? []
         let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
         return Array(indexPathsIntersection)
