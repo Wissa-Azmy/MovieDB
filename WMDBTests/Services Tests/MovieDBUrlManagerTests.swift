@@ -21,7 +21,7 @@ class MovieDBUrlManagerTests: XCTestCase {
     }
 
     func testUrlRequestUrl() {
-        let url = MovieDBUrlManager.urlRequest(of: .nowPlaying, page: 1)?.url?.absoluteString
+        let url = MovieDBUrlManager.urlRequest(of: .nowPlaying, 1)?.url?.absoluteString
         XCTAssertEqual(url, "https://api.themoviedb.org/3/movie/now_playing?page=1")
     }
 

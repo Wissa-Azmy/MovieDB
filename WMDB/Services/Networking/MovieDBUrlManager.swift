@@ -18,7 +18,7 @@ enum MovieDBUrlManager {
     static let imgSize = "w300"
     static let token = TOKEN
     
-    static func urlRequest(of endpoint: MovieDBEndpoint, page: Int, query: String = "") -> URLRequest? {
+    static func urlRequest(of endpoint: MovieDBEndpoint, _ page: Int) -> URLRequest? {
         var queryItems = [URLQueryItem(name: "page", value: "\(page)")]
         var urlComponents = URLComponents()
         urlComponents.scheme = scheme
@@ -27,7 +27,7 @@ enum MovieDBUrlManager {
         switch  endpoint{
         case .nowPlaying:
             urlComponents.path = nowPlayingPath
-        case .search:
+        case .search(let query):
             urlComponents.path = searchPath
             queryItems.append(URLQueryItem(name: "query", value: "\(query)"))
         }
@@ -60,5 +60,5 @@ enum MovieDBUrlManager {
 }
 
 enum MovieDBEndpoint {
-    case nowPlaying, search
+    case nowPlaying, search(_ query: String)
 }

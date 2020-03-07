@@ -127,7 +127,7 @@ extension NowPlayingMoviesVC: UITableViewDataSourcePrefetching {
   func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
     if indexPaths.contains(where: moviesDataService.isLoadingCell) {
         if isSearching {
-            moviesDataService.fetch(moviesMatching: queryString,endpoint: .search)
+            moviesDataService.fetch(endpoint: .search(queryString))
         } else {
             moviesDataService.fetch()
         }

@@ -72,7 +72,7 @@ class MoviesDataServiceTests: XCTestCase {
     func testUpdateNowPlayingMoviesData() {
         sut.movies.removeAll()
         let queue = DispatchQueue(label: "FileLoaderTests")
-        sut.fetch(moviesMatching: "", endpoint: .nowPlaying, on: queue)
+        sut.fetch(endpoint: .nowPlaying, on: queue)
         queue.sync {}
 
         XCTAssertEqual(sut.pageNumber, 2)
@@ -83,7 +83,7 @@ class MoviesDataServiceTests: XCTestCase {
     
     func testUpdateFilteredMoviesData() {
         let queue = DispatchQueue(label: "FileLoaderTests")
-        sut.fetch(moviesMatching: "", endpoint: .search, on: queue)
+        sut.fetch(endpoint: .search(""), on: queue)
         queue.sync {}
 
         XCTAssertEqual(sut.searchPageNumber, 2)
@@ -127,7 +127,7 @@ class ApiServiceMock: MovieDBAPIServiceMock {
     var page = 1
     let movie = Movie(title: "Movie", overview: "", backdropPath: nil, posterPath: nil, voteAverage: 0.0)
     
-    func request(_ endpoint: MovieDBEndpoint, page: Int, query: String, completion: @escaping (Result<MoviesResponse, ResponseError>) -> ()) {
+    func request(_ endpoint: MovieDBEndpoint, page: Int, completion: @escaping (Result<MoviesResponse, ResponseError>) -> ()) {
         let moviesList = Array(repeating: movie, count: 7)
         let moviesResponse = MoviesResponse(results: moviesList, page: page, totalResults: 500, totalPages: 50)
         

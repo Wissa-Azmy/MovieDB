@@ -43,7 +43,7 @@ class MoviesDataService: NSObject {
         didSet {
             if let query = queryText {
                 resetSearchData()
-                fetch(moviesMatching: query, endpoint: .search)
+                fetch(endpoint: .search(query))
             }
         }
     }
@@ -52,13 +52,13 @@ class MoviesDataService: NSObject {
         moviesDBApi = api
     }
     
-    func fetch(moviesMatching query: String = "", endpoint: MovieDBEndpoint = .nowPlaying, on queue: DispatchQueue = DispatchQueue.main) {
+    func fetch(endpoint: MovieDBEndpoint = .nowPlaying, on queue: DispatchQueue = DispatchQueue.main) {
         guard !isFetchInProgress else {
             return
         }
         
         isFetchInProgress = true
-        moviesDBApi.request(endpoint, page: requestPage, query: query) {  [weak self] (result) in
+        moviesDBApi.request(endpoint, page: requestPage) {  [weak self] (result) in
             guard let self = self else { return }
             queue.async {
                 switch result {

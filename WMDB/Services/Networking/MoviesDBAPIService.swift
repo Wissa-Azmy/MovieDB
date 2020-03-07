@@ -11,7 +11,7 @@ import Foundation
 typealias CompletionHandler = (Result<MoviesResponse, ResponseError>) -> Void
 
 protocol MovieDBAPIService {
-    func request(_ endpoint: MovieDBEndpoint, page: Int, query: String, completion: @escaping CompletionHandler)
+    func request(_ endpoint: MovieDBEndpoint, page: Int, completion: @escaping CompletionHandler)
 }
 
 public enum ResponseError: Error {
