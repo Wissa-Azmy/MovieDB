@@ -32,7 +32,7 @@ class MovieDetailsVC: UIViewController {
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.contentMode = .scaleAspectFill
         imgView.clipsToBounds = true
-        imgView.addCornerRadius()
+        imgView.layer.cornerRadius = 8
         return imgView
     }()
     private let titleView: UIView = {

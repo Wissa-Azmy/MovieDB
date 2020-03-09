@@ -98,16 +98,4 @@ extension UIView {
             self.addSubview(view)
         }
     }
-    
-    func addShadow() {
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.08
-        self.layer.shadowRadius = 20
-        self.layer.shadowOffset = CGSize(width: 2.0, height: 1.0)
-    }
-    
-    func addCornerRadius() {
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
-    }
 }
