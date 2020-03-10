@@ -10,9 +10,9 @@ import UIKit
 
 class NowPlayingMoviesVC: UITableViewController {
     private let moviesDataService = MoviesDataService()
-    private let searchController = UISearchController(searchResultsController: nil)
     private var queryString = ""
     var isSearching = false
+    
     private let activityIndicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.hidesWhenStopped = true
@@ -50,12 +50,12 @@ class NowPlayingMoviesVC: UITableViewController {
     
 
     private func setupSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Now Playing Movies"
         self.navigationItem.searchController = searchController
-        self.definesPresentationContext = true
     }
     
     private func setupTableView() {
@@ -64,7 +64,6 @@ class NowPlayingMoviesVC: UITableViewController {
         tableView.dataSource = moviesDataService
         tableView.prefetchDataSource = self
         tableView.separatorColor = UIColor.clear
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.clipsToBounds = false
         tableView.addSubview(activityIndicatorView)
     }
@@ -75,7 +74,7 @@ class NowPlayingMoviesVC: UITableViewController {
 extension NowPlayingMoviesVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        moviesDataService.selectItem(At: indexPath.row, navigationController: navigationController!)
+        moviesDataService.selectItem(At: indexPath, navigationController: navigationController!)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -84,15 +83,13 @@ extension NowPlayingMoviesVC {
 }
 
 
-// MARK: - Movies DataSource delegate Methods
+// MARK: - Movies Data Service delegate Methods
 extension NowPlayingMoviesVC: MoviesDataServiceDelegate {
     func onFetchSuccess(with newIndexPathsToReload: [IndexPath]?) {
         guard let newIndexPathsToReload = newIndexPathsToReload else {
-            DispatchQueue.main.async {
-                self.activityIndicatorView.stopAnimating()
-                self.tableView.isHidden = false
-                self.tableView.reloadData()
-            }
+            self.activityIndicatorView.stopAnimating()
+            self.tableView.reloadData()
+            
             return
         }
         
@@ -142,10 +139,10 @@ extension NowPlayingMoviesVC: UISearchResultsUpdating, UISearchBarDelegate, Sear
         queryString = searchController.searchBar.text ?? ""
         if !queryString.trimmingCharacters(in: .whitespaces).isEmpty {
             isSearching = true
-            moviesDataService.queryText = queryString
+            moviesDataService.resetSearchData()
+            moviesDataService.fetch(endpoint: .search(queryString))
         } else {
             isSearching = false
-            moviesDataService.fetch()
         }
     }
     

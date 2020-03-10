@@ -34,18 +34,8 @@ class MoviesDataService: NSObject {
     private var moviesCount: Int {
         return delegate!.isSearching ? filteredMovies.count : movies.count
     }
-    
     private var requestPage: Int {
         return delegate!.isSearching ? searchPageNumber : pageNumber
-    }
-    
-    var queryText: String? {
-        didSet {
-            if let query = queryText {
-                resetSearchData()
-                fetch(endpoint: .search(query))
-            }
-        }
     }
     
     init(api: MovieDBAPIService = APIService()) {
@@ -53,9 +43,7 @@ class MoviesDataService: NSObject {
     }
     
     func fetch(endpoint: MovieDBEndpoint = .nowPlaying, on queue: DispatchQueue = DispatchQueue.main) {
-        guard !isFetchInProgress else {
-            return
-        }
+        guard !isFetchInProgress else { return }
         
         isFetchInProgress = true
         moviesDBApi.request(endpoint, page: requestPage) {  [weak self] (result) in
@@ -106,6 +94,8 @@ class MoviesDataService: NSObject {
         }
     }
     
+    /// Calculates the tableView cells index paths to reload for the new movies patch appended to the movies array
+    /// - Parameter newMovies: new movies patch added to the movies array from the last fetch
     private func calculateIndexPathsToReload(from newMovies: [Movie]) -> [IndexPath] {
         let startIndex = moviesCount - newMovies.count
         let endIndex = startIndex + newMovies.count
@@ -119,18 +109,20 @@ class MoviesDataService: NSObject {
         filteredMoviesTotalNumber = 0
     }
     
-    func selectItem(At index: Int, navigationController: UINavigationController) {
+    func selectItem(At indexPath: IndexPath, navigationController: UINavigationController) {
+        guard !isLoadingCell(for: indexPath) else { return }
+        
         let vc = MovieDetailsVC()
-        // index check is to avoid 'index out of range' if selected cell movie data was not fetched yet.
-        if delegate!.isSearching, index < filteredMovies.count {
-            vc.movie = filteredMovies[index]
-            navigationController.pushViewController(vc, animated: true)
-        } else if index < movies.count {
-            vc.movie = movies[index]
-            navigationController.pushViewController(vc, animated: true)
-        }
+        vc.movie = movie(at: indexPath.row)
+        navigationController.pushViewController(vc, animated: true)
     }
     
+    private func movie(at index: Int) -> Movie {
+        return delegate!.isSearching ? filteredMovies[index] : movies[index]
+    }
+    
+    /// Checks if a cell has its movie data finished downloading by making sure its indexPath is not beyond the downloaded moviesCount.
+    /// - Parameter indexPath: The indexPath of the cell to check
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
         return indexPath.row >= moviesCount
     }
@@ -144,12 +136,11 @@ extension MoviesDataService: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MovieCell
-        // if the cell at that index path is beyond the count of the movies received so far.
+        
         if isLoadingCell(for: indexPath) {
             cell.configCell(withDataOf: .none)
         } else {
-            let movie = delegate!.isSearching ? filteredMovies[indexPath.row] : movies[indexPath.row]
-            cell.configCell(withDataOf: movie)
+            cell.configCell(withDataOf: movie(at: indexPath.row))
         }
         
         return cell

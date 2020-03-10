@@ -20,8 +20,8 @@ public class APIService: MovieDBAPIService {
     init(session: URLSession = URLSession.shared) {
       self.urlSession = session
     }
-    // NOTE: - I Usualy use Moya to construct my network layer, but I going native for the task sake.
-    func request(_ endpoint: MovieDBEndpoint, page: Int, completion: @escaping (Result<MoviesResponse, ResponseError>) -> ()) {
+    // NOTE: - I Usualy use Moya to construct my network layer, but I am going native for the task sake.
+    func request(_ endpoint: MovieDBEndpoint, page: Int, completion: @escaping CompletionHandler) {
         
         guard let urlRequest = MovieDBUrlManager.urlRequest(of: endpoint, page) else {
             completion(Result.failure(.invalidEndpoint))
