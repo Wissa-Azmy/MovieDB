@@ -59,7 +59,9 @@ class NowPlayingMoviesVC: UITableViewController {
     }
     
     private func setupTableView() {
-        tableView = MoviesTableView(dataService: moviesDataService)
+        let moviesTableView = MoviesTableView(dataService: moviesDataService)
+        moviesTableView.navigationDelegate = self
+        tableView = moviesTableView
         tableView.addSubview(activityIndicatorView)
     }
 }
@@ -119,6 +121,12 @@ extension NowPlayingMoviesVC: UISearchResultsUpdating, UISearchBarDelegate, Sear
         isSearching = false
         moviesDataService.resetSearchData()
         moviesDataService.fetch()
+    }
+}
+
+extension NowPlayingMoviesVC: TableViewNavigationDelegate {
+    func navigate(to vc: UIViewController) {
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

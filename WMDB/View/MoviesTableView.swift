@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol TableViewNavigationDelegate: class {
+    func navigate(to vc: UIViewController)
+}
+
 class MoviesTableView: UITableView {
     var moviesDataService: MoviesDataService!
+    var navigationDelegate: TableViewNavigationDelegate!
     var isSearching = false
     
     convenience init(dataService: MoviesDataService) {
@@ -26,23 +31,7 @@ class MoviesTableView: UITableView {
 
 }
 
-
-// MARK: - TableView Delegate Methods
-extension MoviesTableView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        guard !moviesDataService.isLoadingCell(for: indexPath) else { return }
-               
-        let vc = MovieDetailsVC()
-        vc.movie = moviesDataService?.movie(at: indexPath.row)
-//        navigationController.pushViewController(vc, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
-    }
-}
-
+// MARK: - TableView Data Source Methods
 extension MoviesTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviesDataService.moviesCount
@@ -58,6 +47,22 @@ extension MoviesTableView: UITableViewDataSource {
         }
         
         return cell
+    }
+}
+
+// MARK: - TableView Delegate Methods
+extension MoviesTableView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard !moviesDataService.isLoadingCell(for: indexPath) else { return }
+               
+        let vc = MovieDetailsVC()
+        vc.movie = moviesDataService?.movie(at: indexPath.row)
+        navigationDelegate.navigate(to: vc)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 220
     }
 }
 
