@@ -62,6 +62,7 @@ class NowPlayingMoviesVC: UITableViewController {
         let moviesTableView = MoviesTableView(dataService: moviesDataService)
         moviesTableView.navigationDelegate = self
         tableView = moviesTableView
+        tableView.prefetchDataSource = self
         tableView.addSubview(activityIndicatorView)
     }
 }
@@ -122,6 +123,19 @@ extension NowPlayingMoviesVC: UISearchResultsUpdating, UISearchBarDelegate, Sear
         moviesDataService.resetSearchData()
         moviesDataService.fetch()
     }
+}
+
+// MARK: - DataSource prefetching Methods
+extension NowPlayingMoviesVC: UITableViewDataSourcePrefetching {
+  func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    if indexPaths.contains(where: moviesDataService.isLoadingCell) {
+        if isSearching {
+            moviesDataService.fetch(endpoint: .search(queryString))
+        } else {
+            moviesDataService.fetch()
+        }
+    }
+  }
 }
 
 extension NowPlayingMoviesVC: TableViewNavigationDelegate {

@@ -24,7 +24,6 @@ class MoviesTableView: UITableView {
         self.register(MovieCell.self, forCellReuseIdentifier: "Cell")
         self.dataSource = self
         self.delegate = self
-        self.prefetchDataSource = self
         self.separatorColor = UIColor.clear
         self.clipsToBounds = false
     }
@@ -66,15 +65,3 @@ extension MoviesTableView: UITableViewDelegate {
     }
 }
 
-// MARK: - DataSource prefetching Methods
-extension MoviesTableView: UITableViewDataSourcePrefetching {
-  func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-    if indexPaths.contains(where: moviesDataService.isLoadingCell) {
-        if isSearching {
-            moviesDataService.fetch(endpoint: .search("queryString"))
-        } else {
-            moviesDataService.fetch()
-        }
-    }
-  }
-}
