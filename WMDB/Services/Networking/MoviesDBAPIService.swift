@@ -14,7 +14,7 @@ protocol MovieDBAPIService {
     func request(_ endpoint: MovieDBEndpoint, page: Int, completion: @escaping CompletionHandler)
 }
 
-public enum ResponseError: Error {
+enum ResponseError: Error {
     case apiError
     case invalidEndpoint
     case invalidResponse

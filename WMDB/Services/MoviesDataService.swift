@@ -117,7 +117,7 @@ class MoviesDataService: NSObject {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    private func movie(at index: Int) -> Movie {
+    func movie(at index: Int) -> Movie {
         return delegate!.isSearching ? filteredMovies[index] : movies[index]
     }
     

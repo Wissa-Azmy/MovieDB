@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		442360C6242A3BD50029074E /* MoviesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442360C5242A3BD50029074E /* MoviesTableView.swift */; };
 		442E01CC23FC0C9400D63850 /* MovieDBUrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E01CB23FC0C9400D63850 /* MovieDBUrlManager.swift */; };
 		442E01CE23FC0E8800D63850 /* MovieDBUrlManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E01CD23FC0E8800D63850 /* MovieDBUrlManagerTests.swift */; };
 		442E179E2401DB3D00EF8E32 /* MoviesDataServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E179D2401DB3D00EF8E32 /* MoviesDataServiceTests.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		442360C5242A3BD50029074E /* MoviesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MoviesTableView.swift; path = Controller/MoviesTableView.swift; sourceTree = "<group>"; };
 		442E01CB23FC0C9400D63850 /* MovieDBUrlManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBUrlManager.swift; sourceTree = "<group>"; };
 		442E01CD23FC0E8800D63850 /* MovieDBUrlManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBUrlManagerTests.swift; sourceTree = "<group>"; };
 		442E179D2401DB3D00EF8E32 /* MoviesDataServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDataServiceTests.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				446FCAAD23FEFCA100F99F39 /* Supporting Files */,
 				44C8E75223F6A1290031D042 /* Info.plist */,
 				448EE00423FFF29B00368EA5 /* SensitiveData.swift */,
+				442360C5242A3BD50029074E /* MoviesTableView.swift */,
 			);
 			path = WMDB;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				44C8E74923F6A1260031D042 /* NowPlayingMoviesVC.swift in Sources */,
 				449198F423F9E8C400323EBB /* MovieDetailsVC.swift in Sources */,
 				44C8E78623F856750031D042 /* MovieCell.swift in Sources */,
+				442360C6242A3BD50029074E /* MoviesTableView.swift in Sources */,
 				44C8E78823F8573D0031D042 /* UIView+Extension.swift in Sources */,
 				44C8E74523F6A1260031D042 /* AppDelegate.swift in Sources */,
 				449198E923F92D9800323EBB /* Fonts.swift in Sources */,
