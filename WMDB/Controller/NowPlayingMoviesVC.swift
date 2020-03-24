@@ -9,7 +9,7 @@
 import UIKit
 
 class NowPlayingMoviesVC: UITableViewController {
-    private let moviesDataService = MoviesDataService()
+    let moviesDataService = MoviesDataService()
     private var queryString = ""
     var isSearching = false
     
@@ -25,11 +25,11 @@ class NowPlayingMoviesVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        moviesDataService.delegate = self
-        moviesDataService.fetch()
 
         setupSearchController()
         setupTableView()
+        moviesDataService.delegate = self
+        moviesDataService.fetch()
         activityIndicatorView.centerAnchor(in: view)
         activityIndicatorView.startAnimating()
     }
@@ -59,26 +59,8 @@ class NowPlayingMoviesVC: UITableViewController {
     }
     
     private func setupTableView() {
-        tableView.backgroundColor = .white
-        tableView.register(MovieCell.self, forCellReuseIdentifier: "Cell")
-        tableView.dataSource = moviesDataService
-        tableView.prefetchDataSource = self
-        tableView.separatorColor = UIColor.clear
-        tableView.clipsToBounds = false
+        tableView = MoviesTableView(dataService: moviesDataService)
         tableView.addSubview(activityIndicatorView)
-    }
-}
-
-
-// MARK: - TableView Delegate Methods
-extension NowPlayingMoviesVC {
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        moviesDataService.selectItem(At: indexPath, navigationController: navigationController!)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
     }
 }
 
@@ -116,20 +98,6 @@ extension NowPlayingMoviesVC: MoviesDataServiceDelegate {
         APIFailureAlert.addAction(action)
         present(APIFailureAlert, animated: true)
     }
-}
-
-
-// MARK: - DataSource prefetching Methods
-extension NowPlayingMoviesVC: UITableViewDataSourcePrefetching {
-  func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-    if indexPaths.contains(where: moviesDataService.isLoadingCell) {
-        if isSearching {
-            moviesDataService.fetch(endpoint: .search(queryString))
-        } else {
-            moviesDataService.fetch()
-        }
-    }
-  }
 }
 
 

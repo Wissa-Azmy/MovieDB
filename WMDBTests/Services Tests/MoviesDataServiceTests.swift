@@ -21,14 +21,15 @@ class MoviesDataServiceTests: XCTestCase {
         sut = MoviesDataService(api: apiService)
         moviesTVDelegate = NowPlayingMoviesVC()
         sut.delegate = moviesTVDelegate
-        moviesTableView = TableViewMock(dataSource: sut, delegate: moviesTVDelegate)
+        let dataSourceAndDelegate = MoviesTableView(dataService: sut)
+        moviesTableView = TableViewMock(dataSourceAndDelegate: dataSourceAndDelegate)
         
         // Setup data
         let movie = Movie(title: "Movie", overview: "", backdropPath: nil, posterPath: nil, voteAverage: 0.0)
         moviesList = Array(repeating: movie, count: 5)
         sut.movies = moviesList
-        sut.totalNumberOfMovies = 5
-        sut.filteredMoviesTotalNumber = 6
+        sut.allMoviesCount = 5
+        sut.filteredMoviesCount = 6
         moviesTableView.reloadData()
     }
 
@@ -77,7 +78,7 @@ class MoviesDataServiceTests: XCTestCase {
 
         XCTAssertEqual(sut.pageNumber, 2)
         XCTAssertEqual(sut.totalPages, 50)
-        XCTAssertEqual(sut.totalNumberOfMovies, 500)
+        XCTAssertEqual(sut.allMoviesCount, 500)
         XCTAssertEqual(sut.movies.count, 7)
     }
     
@@ -88,7 +89,7 @@ class MoviesDataServiceTests: XCTestCase {
 
         XCTAssertEqual(sut.searchPageNumber, 2)
         XCTAssertEqual(sut.filteredTotalPages, 50)
-        XCTAssertEqual(sut.filteredMoviesTotalNumber, 500)
+        XCTAssertEqual(sut.filteredMoviesCount, 500)
         XCTAssertEqual(sut.filteredMovies.count, 7)
     }
     
@@ -96,13 +97,13 @@ class MoviesDataServiceTests: XCTestCase {
         sut.searchPageNumber = 5
         sut.filteredTotalPages = 7
         sut.filteredMovies = moviesList
-        sut.filteredMoviesTotalNumber = 443
+        sut.filteredMoviesCount = 443
         
         sut.resetSearchData()
         
         XCTAssertEqual(sut.searchPageNumber, 1)
         XCTAssertEqual(sut.filteredTotalPages, 2)
-        XCTAssertEqual(sut.filteredMoviesTotalNumber, 0)
+        XCTAssertEqual(sut.filteredMoviesCount, 0)
         XCTAssertEqual(sut.filteredMovies.count, 0)
     }
     
@@ -110,10 +111,10 @@ class MoviesDataServiceTests: XCTestCase {
 
 
 class TableViewMock: UITableView {
-    init(dataSource: MoviesDataService, delegate: NowPlayingMoviesVC) {
+    init(dataSourceAndDelegate: UITableViewDataSource & UITableViewDelegate) {
         super.init(frame: CGRect(x: 0, y: 0, width: 300, height: 500), style: .plain)
-        self.dataSource = dataSource
-        self.delegate = delegate
+        self.dataSource = dataSourceAndDelegate
+        self.delegate = dataSourceAndDelegate
         self.register(MovieCell.self, forCellReuseIdentifier: "Cell")
     }
     

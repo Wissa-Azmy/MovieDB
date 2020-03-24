@@ -28,12 +28,10 @@ class NowPlayingMoviesVCTests: XCTestCase {
 
     func testDataSource_isSet() {
         XCTAssertNotNil(sut.tableView.dataSource)
-        XCTAssertTrue(sut.tableView.dataSource is MoviesDataService)
     }
     
     func testDelegate_isSet() {
         XCTAssertNotNil(sut.tableView.delegate)
-        XCTAssertTrue(sut.tableView.delegate is NowPlayingMoviesVC)
     }
 
 }

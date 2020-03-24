@@ -45,7 +45,7 @@ extension MoviesTableView: UITableViewDelegate {
 
 extension MoviesTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //delegate!.isSearching ? filteredMoviesTotalNumber : totalNumberOfMovies
+        return moviesDataService.moviesCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
