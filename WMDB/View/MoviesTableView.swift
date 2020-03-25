@@ -21,6 +21,7 @@ class MoviesTableView: UITableView {
         self.init()
         self.moviesDataService = dataService
         self.backgroundColor = .white
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.register(MovieCell.self, forCellReuseIdentifier: "Cell")
         self.dataSource = self
         self.delegate = self

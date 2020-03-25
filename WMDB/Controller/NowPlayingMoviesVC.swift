@@ -8,8 +8,9 @@
 
 import UIKit
 
-class NowPlayingMoviesVC: UITableViewController {
+class NowPlayingMoviesVC: UIViewController {
     let moviesDataService = MoviesDataService()
+    var tableView: MoviesTableView!
     private var queryString = ""
     var isSearching = false
     
@@ -21,6 +22,12 @@ class NowPlayingMoviesVC: UITableViewController {
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
         return indicatorView
     }()
+    
+    override func loadView() {
+        super.loadView()
+        view = UIView()
+        view.backgroundColor = .white
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +66,12 @@ class NowPlayingMoviesVC: UITableViewController {
     }
     
     private func setupTableView() {
-        let moviesTableView = MoviesTableView(dataService: moviesDataService)
-        moviesTableView.navigationDelegate = self
-        tableView = moviesTableView
+        tableView = MoviesTableView(dataService: moviesDataService)
+        tableView.navigationDelegate = self
         tableView.prefetchDataSource = self
         tableView.addSubview(activityIndicatorView)
+        view.addSubview(tableView)
+        tableView.anchors(to: view)
     }
 }
 
