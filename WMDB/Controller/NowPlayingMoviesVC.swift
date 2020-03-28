@@ -66,8 +66,7 @@ class NowPlayingMoviesVC: UIViewController {
     }
     
     private func setupTableView() {
-        tableView = MoviesTableView(dataService: moviesDataService)
-        tableView.navigationDelegate = self
+        tableView = MoviesTableView(dataService: moviesDataService, navigationDelegate: self)
         tableView.prefetchDataSource = self
         tableView.addSubview(activityIndicatorView)
         view.addSubview(tableView)

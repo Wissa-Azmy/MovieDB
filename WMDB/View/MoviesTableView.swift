@@ -13,11 +13,11 @@ protocol TableViewNavigationDelegate: class {
 }
 
 class MoviesTableView: UITableView {
-    var moviesDataService: MoviesDataService!
-    var navigationDelegate: TableViewNavigationDelegate!
+    private var moviesDataService: MoviesDataService!
+    private weak var navigationDelegate: TableViewNavigationDelegate!
     var isSearching = false
     
-    convenience init(dataService: MoviesDataService) {
+    convenience init(dataService: MoviesDataService, navigationDelegate: TableViewNavigationDelegate) {
         self.init()
         self.moviesDataService = dataService
         self.backgroundColor = .white
@@ -25,6 +25,7 @@ class MoviesTableView: UITableView {
         self.register(MovieCell.self, forCellReuseIdentifier: "Cell")
         self.dataSource = self
         self.delegate = self
+        self.navigationDelegate = navigationDelegate
         self.separatorColor = UIColor.clear
         self.clipsToBounds = false
     }
