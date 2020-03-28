@@ -13,6 +13,7 @@ class NowPlayingMoviesVC: UIViewController {
     var tableView: MoviesTableView!
     private var queryString = ""
     var isSearching = false
+    private var isError = false
     
     private let activityIndicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
@@ -101,12 +102,13 @@ extension NowPlayingMoviesVC: MoviesDataServiceDelegate {
     
     func onFetchError(with description: String) {
         activityIndicatorView.stopAnimating()
-        
-        let title = "Error"
-        let action = UIAlertAction(title: "OK", style: .default)
-        let APIFailureAlert = UIAlertController(title: title, message: description, preferredStyle: .alert)
-        APIFailureAlert.addAction(action)
-        present(APIFailureAlert, animated: true)
+        if !isError { // To avoid warning while trying to show multiple alerts in the same time
+            isError = true
+            let APIFailureAlert = UIAlertController(title: "Error", message: description, preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { (_) in self.isError = false }
+            APIFailureAlert.addAction(action)
+            present(APIFailureAlert, animated: true)
+        }
     }
 }
 

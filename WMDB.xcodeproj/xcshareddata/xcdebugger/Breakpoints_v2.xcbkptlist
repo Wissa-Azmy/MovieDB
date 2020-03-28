@@ -29,8 +29,8 @@
          <BreakpointContent
             uuid = "85DBB75E-375D-4E30-8C33-7D15951B3FF5"
             shouldBeEnabled = "No"
-            ignoreCount = "0"
             condition = "10 &gt; pageNumber &gt; 1"
+            ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "WMDB/Services/MoviesDataService.swift"
             startingColumnNumber = "9223372036854775807"
