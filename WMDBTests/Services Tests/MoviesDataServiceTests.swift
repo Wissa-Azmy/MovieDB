@@ -25,6 +25,7 @@ class MoviesDataServiceTests: XCTestCase {
         moviesTableView = TableViewMock(dataSourceAndDelegate: dataSourceAndDelegate)
         
         // Setup data
+        let _ = moviesTVDelegate.view
         let movie = Movie(title: "Movie", overview: "", backdropPath: nil, posterPath: nil, voteAverage: 0.0)
         moviesList = Array(repeating: movie, count: 5)
         sut.movies = moviesList

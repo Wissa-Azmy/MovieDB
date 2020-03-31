@@ -17,7 +17,7 @@ class MoviesTableView: UITableView {
     private weak var navigationDelegate: TableViewNavigationDelegate!
     var isSearching = false
     
-    convenience init(dataService: MoviesDataService, navigationDelegate: TableViewNavigationDelegate) {
+    convenience init(dataService: MoviesDataService, navigationDelegate: TableViewNavigationDelegate? = nil) {
         self.init()
         self.moviesDataService = dataService
         self.backgroundColor = .white
@@ -59,7 +59,7 @@ extension MoviesTableView: UITableViewDelegate {
                
         let vc = MovieDetailsVC()
         vc.movie = moviesDataService?.movie(at: indexPath.row)
-        navigationDelegate.navigate(to: vc)
+        navigationDelegate?.navigate(to: vc)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MovieDBUrlManager {
+struct MovieDBUrlManager {
     static let scheme = "https"
     static let mainHost = "api.themoviedb.org"
     static let imagesHost = "image.tmdb.org"
